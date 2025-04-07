@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CreciPay Challenge
 
-## Getting Started
+Este es un proyecto desarrollado con Next.js que implementa un sistema de comisiones para representantes de ventas.
+Decidí usar Supabase como servicio de base de datos por su simplesa y rapidez. Si bien el proyecto se puede adaptar a servicios como AWS o GCP.
 
-First, run the development server:
+## Requisitos
+
+- Node.js 18 o superior
+- Supabase cuenta
+
+## Configuración del Proyecto
+
+1. Clona el repositorio
+2. Instala las dependencias:
+
+```bash
+npm install
+# o
+yarn install
+```
+
+3. Configura las variables de entorno:
+   Crea un archivo `.env.local` en la raíz del proyecto con las siguientes variables:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://enjrluulecowgvruhpcy.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVuanJsdXVsZWNvd2d2cnVocGN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM5ODY2NTksImV4cCI6MjA1OTU2MjY1OX0.NilVKt-_Jq_wVv9gYapghHD1MXW_2giCLQeeIGdq4LU
+```
+
+## Estructura del Proyecto
+
+- `/app`: Páginas y rutas de la aplicación
+- `/app/api`: Endpoints para poder manipular los datos
+- `/components`: Componentes reutilizables
+- `/types`: Tipos TypeScript
+- `/utils`: Funciones utilitarias
+
+## Funcionalidades
+
+- Sistema de comisiones para representantes de ventas
+- Carga masiva de datos a través de archivo CSV
+- Filtros por representante y mes
+- Tabla de comisiones con información detallada
+
+## Desarrollo
+
+Para iniciar el servidor de desarrollo:
 
 ```bash
 npm run dev
-# or
+# o
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La aplicación estará disponible en `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Nota Importante
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Hice el siguiente cambio antes de subir ya que tiraba error si no se borraba los datos de la tabla:
 
-## Learn More
+Antes:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+const { error } = await supabase.from("commissions").insert(results);
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Despues:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+const { error } = await supabase.from("commissions").upsert(results);
+```
 
-## Deploy on Vercel
+## Tecnologías Utilizadas
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 15+
+- Supabase
+- Tailwind CSS
+- TypeScript
